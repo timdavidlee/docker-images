@@ -1,1 +1,2 @@
-docker build . -t chaffix/$IMAGENAME
+source .env
+docker build . -t $IMAGENAME

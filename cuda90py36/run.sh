@@ -1,1 +1,1 @@
-docker run --runtime=nvidia -it cuda90py36:latest
+docker run --runtime=nvidia -it $IMAGENAME
