@@ -4,7 +4,7 @@ ARG CUDA=10.0
 FROM nvidia/cuda:10.0-base-ubuntu18.04 as base
 ARG CUDNN=7.4.1.5-1
 
-MAINTAINER chaffix "tim.david.lee@gmail.com"
+MAINTAINER "chaffixdev@gmail.com"
 
 # Needed for string substitution 
 SHELL ["/bin/bash", "-c"]

@@ -4,6 +4,8 @@ ARG CUDA=9.2
 FROM nvidia/cuda:9.2-base-ubuntu18.04 as base
 ARG CUDNN=7.4.1.5-1
 
+LABEL "chaffixdev@gmail.com"
+
 # Needed for string substitution 
 SHELL ["/bin/bash", "-c"]
 # Pick up some TF dependencies
