@@ -12,7 +12,7 @@ RUN add-apt-repository ppa:graphics-drivers/ppa && apt-get update
 
 # assuming cuda 9
 # reference  https://github.com/NVIDIA/nvidia-docker/wiki/CUDA
-RUN apt-get install nvidia-384
+RUN apt-get install -y nvidia-384
 
 # install cuda
 RUN dpkg -i cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
