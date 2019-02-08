@@ -53,4 +53,13 @@ RUN pip3 --no-cache-dir install --upgrade \
 RUN ln -s /usr/bin/python3 /usr/bin/python 
 RUN ln -s /usr/bin/pip3 /usr/bin/pip 
 
-RUN pip install tensorflow-gpu==1.13.0r1
+RUN pip install -U \
+    pandas \
+    numpy \
+    numba \
+    feather-format \
+    h5py \
+    sklearn \
+    keras
+
+RUN pip install tensorflow-gpu==1.13.0rc1
