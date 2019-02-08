@@ -1,7 +1,7 @@
 ARG UBUNTU_VERSION=18.04
 
 ARG CUDA=9.0
-FROM nvidia/cuda:10.0-base-ubuntu18.04 as base
+FROM nvidia/cuda:9.0-base-ubuntu16.04 as base
 ARG CUDNN=7.4.1.5-1
 
 # Needed for string substitution 
@@ -41,8 +41,8 @@ ARG PIP=pip3
 ENV LANG C.UTF-8
 
 RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-dev \
+    python3.6 \
+    python3.6-dev \
     python3-pip
 
 RUN pip3 --no-cache-dir install --upgrade \
