@@ -1,35 +1,62 @@
-ARG UBUNTU_VERSION=18.04
+FROM ubuntu:16.04
 
-ARG CUDA=9.0
-FROM nvidia/cuda:9.0-base-ubuntu16.04 as base
-ARG CUDNN=7.4.1.5-1
+RUN apt-get update && apt-get install -y --no-install-recommends\
+    build-essential \ 
+    apt-utils \
+    pkg-config \
+    software-properties-common \
+    unzip \
+    curl
 
-# Needed for string substitution 
-SHELL ["/bin/bash", "-c"]
-# Pick up some TF dependencies
+RUN add-apt-repository ppa:graphics-drivers/ppa && apt-get update
+
+# assuming cuda 9
+# reference  https://github.com/NVIDIA/nvidia-docker/wiki/CUDA
+RUN apt-get install nvidia-384
+
+# install cuda
+RUN dpkg -i cuda-repo-ubuntu1604-10-0-local-10.0.130-410.48_1.0-1_amd64.deb
+RUN apt-get update
+RUN apt-get install cuda
+
+RUN tar -xvf cudnn-8.0-linux-x64-v5.1.tgz -C /usr/local
+
+ARG LD_LIBRARY_PATH=/usr/local/cuda/lib64
+ARG PATH=$PATH:/usr/local/cuda-9.0/bin
+
+RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        build-essential \
+    python3.6.7 \
+    python3-dev \
+    python3-pip \
+
+RUN pip3 install -U pip
+RUN pip3 install -U setuptools
+
+# Some TF tools expect a "python" binary
+RUN ln -s /usr/local/bin/python3 /usr/local/bin/python 
+RUN ln -s /usr/local/bin/pip3 /usr/local/bin/pip 
+
+## TF prereqs
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
         cuda-command-line-tools-9-0 \
         cuda-cublas-9-0 \
         cuda-cufft-9-0 \
         cuda-curand-9-0 \
         cuda-cusolver-9-0 \
         cuda-cusparse-9-0 \
-        curl \
         libcudnn7=7.4.1.5-1+cuda9.0 \
         libfreetype6-dev \
         libhdf5-serial-dev \
-        libzmq3-dev \
-        pkg-config \
-        software-properties-common \
-        unzip
+        libzmq3-dev
 
-RUN [ ${ARCH} = ppc64le ] || (apt-get update && \
+RUN apt-get update && \
         apt-get install nvinfer-runtime-trt-repo-ubuntu1804-5.0.2-ga-cuda9.0 \
         && apt-get update \
         && apt-get install -y --no-install-recommends libnvinfer5=5.0.2-1+cuda9.0 \
         && apt-get clean \
-        && rm -rf /var/lib/apt/lists/*)
+        && rm -rf /var/lib/apt/lists/*
 
 # For CUDA profiling, TensorFlow requires CUPTI.
 ENV LD_LIBRARY_PATH /usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
@@ -39,18 +66,5 @@ ARG PIP=pip3
 
 # See http://bugs.python.org/issue19846
 ENV LANG C.UTF-8
-
-RUN apt-get update && apt-get install -y \
-    python3.6 \
-    python3.6-dev \
-    python3-pip
-
-RUN pip3 --no-cache-dir install --upgrade \
-    pip \
-    setuptools
-
-# Some TF tools expect a "python" binary
-RUN ln -s /usr/local/bin/python3 /usr/local/bin/python 
-RUN ln -s /usr/local/bin/pip3 /usr/local/bin/pip 
 
 RUN pip install tensorflow-gpu
