@@ -15,6 +15,7 @@ RUN add-apt-repository ppa:graphics-drivers/ppa && apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends nvidia-384
 
 # install cuda
+SHELL ["/bin/bash", "-c"]
 RUN dpkg -i /home/ubuntu/cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install cuda
