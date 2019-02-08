@@ -15,30 +15,41 @@ RUN add-apt-repository ppa:graphics-drivers/ppa && apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends nvidia-384
 
 # install cuda
-#RUN dpkg -i cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
-RUN sh ~/cuda_9.0.176_384.81_linux.run
+COPY cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64-deb /
+RUN ls /
+RUN dpkg -i /cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64-deb
+RUN apt-key add /var/cuda-repo-9-0-local/7fa2af80.pub
 RUN apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get install cuda
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y cuda
 
-# RUN tar -xvf cudnn-8.0-linux-x64-v5.1.tgz -C /usr/local
 
 ARG LD_LIBRARY_PATH=/usr/local/cuda/lib64
 ARG PATH=$PATH:/usr/local/cuda-9.0/bin
 
+# install python 3.6
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3.6.7 \
-    python3-dev \
-    python3-pip
+    python3.6 \
+    python3.6-dev
 
-RUN pip3 install -U pip
-RUN pip3 install -U setuptools
+RUN apt-get install wget
+RUN wget https://bootstrap.pypa.io/get-pip.py
+RUN python3.6 get-pip.py
+
+RUN pip3.6 install -U pip
+RUN pip3.6 install -U setuptools
 
 # Some TF tools expect a "python" binary
-RUN ln -s /usr/local/bin/python3 /usr/local/bin/python 
-RUN ln -s /usr/local/bin/pip3 /usr/local/bin/pip 
+RUN ln -s /usr/bin/python3.6 /usr/bin/python
+
+# check versions
+RUN python -V
+RUN pip --version
 
 ## TF prereqs
+COPY libcudnn7_7.4.2.24-1+cuda9.0_amd64.deb /
+RUN dpkg -i /libcudnn7_7.4.2.24-1+cuda9.0_amd64.deb
+RUN apt-get update
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         cuda-command-line-tools-9-0 \
@@ -47,15 +58,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         cuda-curand-9-0 \
         cuda-cusolver-9-0 \
         cuda-cusparse-9-0 \
-        libcudnn7=7.4.1.5-1+cuda9.0 \
+        libcudnn7=7.4.2.24-1+cuda9.0 \
         libfreetype6-dev \
         libhdf5-serial-dev \
         libzmq3-dev
-
+#https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/nvinfer-runtime-trt-repo-ubuntu1604-4.0.1-ga-cuda9.0_1-1_amd64.deb
+COPY nvinfer-runtime-trt-repo-ubuntu1604-4.0.1-ga-cuda9.0_1-1_amd64.deb /
+RUN dpkg -i /nvinfer-runtime-trt-repo-ubuntu1604-4.0.1-ga-cuda9.0_1-1_amd64.deb
 RUN apt-get update && \
-        apt-get install nvinfer-runtime-trt-repo-ubuntu1804-5.0.2-ga-cuda9.0 \
+        apt-get install nvinfer-runtime-trt-repo-ubuntu1604-4.0.1-ga-cuda9.0 \
         && apt-get update \
-        && apt-get install -y --no-install-recommends libnvinfer5=5.0.2-1+cuda9.0 \
+        && apt-get install -y --no-install-recommends libnvinfer4=4.1.2-1+cuda9.0 \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
 
