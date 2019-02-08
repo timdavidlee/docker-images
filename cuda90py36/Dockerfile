@@ -1,6 +1,6 @@
 ARG UBUNTU_VERSION=18.04
 
-ARG CUDA=9.2
+ARG CUDA=9.0
 FROM nvidia/cuda:10.0-base-ubuntu18.04 as base
 ARG CUDNN=7.4.1.5-1
 
@@ -9,14 +9,14 @@ SHELL ["/bin/bash", "-c"]
 # Pick up some TF dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
-        cuda-command-line-tools-10-0 \
-        cuda-cublas-10-0 \
-        cuda-cufft-10-0 \
-        cuda-curand-10-0 \
-        cuda-cusolver-10-0 \
-        cuda-cusparse-10-0 \
+        cuda-command-line-tools-9-0 \
+        cuda-cublas-9-0 \
+        cuda-cufft-9-0 \
+        cuda-curand-9-0 \
+        cuda-cusolver-9-0 \
+        cuda-cusparse-9-0 \
         curl \
-        libcudnn7=7.4.1.5-1+cuda10.0 \
+        libcudnn7=7.4.1.5-1+cuda9.0 \
         libfreetype6-dev \
         libhdf5-serial-dev \
         libzmq3-dev \
@@ -25,9 +25,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         unzip
 
 RUN [ ${ARCH} = ppc64le ] || (apt-get update && \
-        apt-get install nvinfer-runtime-trt-repo-ubuntu1804-5.0.2-ga-cuda9.2 \
+        apt-get install nvinfer-runtime-trt-repo-ubuntu1804-5.0.2-ga-cuda9.0 \
         && apt-get update \
-        && apt-get install -y --no-install-recommends libnvinfer5=5.0.2-1+cuda9.2 \
+        && apt-get install -y --no-install-recommends libnvinfer5=5.0.2-1+cuda9.0 \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*)
 
@@ -53,4 +53,4 @@ RUN pip3 --no-cache-dir install --upgrade \
 RUN ln -s /usr/local/bin/python3 /usr/local/bin/python 
 RUN ln -s /usr/local/bin/pip3 /usr/local/bin/pip 
 
-RUN pip install tensorflow-gpu==1.13.0r1
+RUN pip install tensorflow-gpu
