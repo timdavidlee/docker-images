@@ -17,7 +17,7 @@ RUN apt-get install -y nvidia-384
 # install cuda
 RUN dpkg -i cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
 RUN apt-get update
-RUN apt-get install cuda
+RUN DEBIAN_FRONTEND=noninteractive apt-get install cuda
 
 # RUN tar -xvf cudnn-8.0-linux-x64-v5.1.tgz -C /usr/local
 
