@@ -28,7 +28,7 @@ RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3.6.7 \
     python3-dev \
-    python3-pip \
+    python3-pip
 
 RUN pip3 install -U pip
 RUN pip3 install -U setuptools
