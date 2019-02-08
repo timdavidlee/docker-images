@@ -1,1 +1,2 @@
-docker build . -t chaffix/cuda100py36:latest
+source .env
+docker build . -t $IMAGENAME

@@ -1,7 +1,7 @@
 ARG UBUNTU_VERSION=18.04
 
 ARG CUDA=9.2
-FROM nvidia/cuda:10.0-base-ubuntu18.04 as base
+FROM nvidia/cuda:9.2-base-ubuntu18.04 as base
 ARG CUDNN=7.4.1.5-1
 
 # Needed for string substitution 
@@ -9,14 +9,14 @@ SHELL ["/bin/bash", "-c"]
 # Pick up some TF dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential \
-        cuda-command-line-tools-10-0 \
-        cuda-cublas-10-0 \
-        cuda-cufft-10-0 \
-        cuda-curand-10-0 \
-        cuda-cusolver-10-0 \
-        cuda-cusparse-10-0 \
+        cuda-command-line-tools-9-2 \
+        cuda-cublas-9-2 \
+        cuda-cufft-9-2 \
+        cuda-curand-9-2 \
+        cuda-cusolver-9-2 \
+        cuda-cusparse-9-2 \
         curl \
-        libcudnn7=7.4.1.5-1+cuda10.0 \
+        libcudnn7=7.4.1.5-1+cuda9.2 \
         libfreetype6-dev \
         libhdf5-serial-dev \
         libzmq3-dev \
