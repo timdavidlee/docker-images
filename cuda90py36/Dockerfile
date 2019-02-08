@@ -15,11 +15,11 @@ RUN add-apt-repository ppa:graphics-drivers/ppa && apt-get update
 RUN apt-get install nvidia-384
 
 # install cuda
-RUN dpkg -i cuda-repo-ubuntu1604-10-0-local-10.0.130-410.48_1.0-1_amd64.deb
+RUN dpkg -i cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
 RUN apt-get update
 RUN apt-get install cuda
 
-RUN tar -xvf cudnn-8.0-linux-x64-v5.1.tgz -C /usr/local
+# RUN tar -xvf cudnn-8.0-linux-x64-v5.1.tgz -C /usr/local
 
 ARG LD_LIBRARY_PATH=/usr/local/cuda/lib64
 ARG PATH=$PATH:/usr/local/cuda-9.0/bin
