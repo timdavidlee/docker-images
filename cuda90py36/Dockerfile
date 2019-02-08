@@ -16,7 +16,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends nv
 
 # install cuda
 #RUN dpkg -i cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
-RUN sh cuda_9.0.176_384.81_linux.run
+RUN sh ~/cuda_9.0.176_384.81_linux.run
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install cuda
 
