@@ -1,1 +1,1 @@
-docker push chaffix/cuda100py36:latest
+docker push chaffix/cuda90py36:latest
