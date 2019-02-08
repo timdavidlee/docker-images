@@ -4,7 +4,7 @@ ARG CUDA=9.0
 FROM nvidia/cuda:9.0-base-ubuntu16.04 as base
 ARG CUDNN=7.4.1.5-1
 
-LABEL "chaffixdev@gmail.com"
+LABEL maintainer="chaffixdev@gmail.com"
 
 # Needed for string substitution 
 SHELL ["/bin/bash", "-c"]
