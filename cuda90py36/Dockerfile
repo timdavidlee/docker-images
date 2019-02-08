@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN [ ${ARCH} = ppc64le ] || (apt-get update && \
         apt-get install nvinfer-runtime-trt-repo-ubuntu1604-4.0.1-ga-cuda9.0 \
         && apt-get update \
-        && apt-get install -y --no-install-recommends libnvinfer5=4.1.2-1+cuda9.0 \
+        && apt-get install -y --no-install-recommends libnvinfer4=4.1.2-1+cuda9.0 \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*)
 
@@ -54,8 +54,8 @@ RUN pip3.6 install -U pip
 RUN pip3.6 install -U setuptools
 
 # Some TF tools expect a "python" binary
-RUN ln -s /usr/local/bin/python3.6 /usr/local/bin/python 
-RUN ln -s /usr/local/bin/pip3.6 /usr/local/bin/pip 
+RUN ln -s /usr/bin/python3.6 /usr/bin/python 
+RUN ln -s /usr/bin/pip3.6 /usr/bin/pip 
 
 RUN pip install tensorflow-gpu
 RUN pip install pandas \

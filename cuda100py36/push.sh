@@ -1,1 +1,2 @@
-docker push chaffix/cuda100py36:latest
+source .env
+docker push $IMAGENAME
