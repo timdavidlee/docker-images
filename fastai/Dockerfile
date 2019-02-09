@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         vim \
         libjpeg-dev \
         libpng-dev \
+        git \
         && rm -rf /var/lib/apt/lists/*
 
 
@@ -51,3 +52,27 @@ RUN pip install pandas \
         keras \
         sklearn \
         torchvision
+
+# fastai
+
+RUN pip install -U \
+    bs4 \
+    fastprogress \
+    matplotlib \
+    bottleneck \
+    numexpr \
+    nvidia-ml-py3 \
+    packaging \
+    pillow \
+    requests \
+    scipy \
+    spacy \
+    typing \
+    dataclasses \
+    jupyter \
+    jupyterlab \
+    nbconvert \
+    nbformat \
+    traitlets
+
+RUN pip install git+https://github.com/fastai/fastai.git
