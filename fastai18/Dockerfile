@@ -24,6 +24,7 @@ ENV LANG C.UTF-8
 # install python 3.6
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3.7 \
+    python3.7-distutils \
     python3.7-dev
 
 RUN apt-get install wget
