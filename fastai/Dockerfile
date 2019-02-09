@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         unzip \
         vim \
         libjpeg-dev \
-        libpng-dev &&\
+        libpng-dev \
         && rm -rf /var/lib/apt/lists/*
 
 
@@ -37,7 +37,7 @@ RUN pip3.6 install -U setuptools
 RUN ln -s /usr/bin/python3.6 /usr/bin/python 
 RUN ln -s /usr/bin/pip3.6 /usr/bin/pip 
 
-RUN pip install -y \
+RUN pip install -U \
     pyyaml \
     scipy \
     ipython \
