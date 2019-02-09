@@ -1,4 +1,4 @@
-FROM 10.0-cudnn7-devel-ubuntu18.04 as base
+FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04 as base
 
 LABEL maintainer="chaffixdev@gmail.com"
 
